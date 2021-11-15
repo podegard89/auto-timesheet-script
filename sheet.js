@@ -1,15 +1,15 @@
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 
-const url = require("./url.json").url;
+const secrets = require('./secrets')
 
 
 class Sheet {
     constructor() {
-        this.doc = new GoogleSpreadsheet(url);
+        this.doc = new GoogleSpreadsheet(secrets.sheetUrl);
     }
 
     async load() {
-        await this.doc.useServiceAccountAuth(require('./credentials.json'));
+        await this.doc.useServiceAccountAuth(secrets.credentials);
         await this.doc.loadInfo();
     }
 
