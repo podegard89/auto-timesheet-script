@@ -19,20 +19,18 @@ const Sheet = require('./sheet');
         await element.click();
     }
 
-    const selectors = [
-        '.taboff', '[name="GeneralOpenFolder"]',
-        '[value="Time Sheet"]'
-    ]
-
-    // crawl to banner time sheet
-    for (let s of selectors) {
-        await waitThenClick(s);
-    }
-
-    // get rows from Time sheet for date/hour data
+    // get rows from selector sheet
     const sheet = new Sheet();
     await sheet.load();
-    // currently only grabs last 5, will need to be updated to 10
+
+    const selectors = await sheet.getRows(1);
+
+    // crawl to banner time sheet
+    for (let row of selectors) {
+        await waitThenClick(row.selector);
+    }
+
+    // grabs last 10 rows from time sheet
     const timeSheetRows = (await sheet.getRows(0)).slice(1).slice(-10);
 
     // then loop through the data and enter it into banner time sheet
