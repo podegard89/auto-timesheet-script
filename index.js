@@ -30,12 +30,13 @@ const Sheet = require('./sheet');
         await waitThenClick(row.selector);
     }
 
-    // get pay period length from sheet 3
+    // get number of days in last pay period from sheet 3
     const payPeriods = await sheet.getRows(2);
-    // payPeriod needs to negative for the double slice shenanigans on the next line
-    const payPeriod = -Math.abs(payPeriods[payPeriods.length - 1].payPeriod);
+    const payPeriod = payPeriods[payPeriods.length - 1].payPeriod;
+    console.log(payPeriod)
     // grabs last payPeriod rows from time sheet
-    const timeSheetRows = (await sheet.getRows(0)).slice(1).slice(payPeriod);
+    const timeSheetRows = (await sheet.getRows(0)).slice(1).slice(-payPeriod);
+    console.log(timeSheetRows.length);
     // then loop through the data and enter it into banner time sheet
     for (const [index, row] of timeSheetRows.entries()) {
         if (index === 5) {
@@ -56,5 +57,7 @@ const Sheet = require('./sheet');
         await saveButton.click();
     }
 
+    // I am not automatically closing the browser for now so I can confirm
+    // everything is working and manually submit hours for approval.
     // await browser.close();
 })()
