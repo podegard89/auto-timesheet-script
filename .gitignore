@@ -2,3 +2,5 @@ node_modules/
 credentials.json
 secrets.js
 url.json
+secrets.json
+test.js

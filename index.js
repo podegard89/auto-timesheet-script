@@ -30,9 +30,12 @@ const Sheet = require('./sheet');
         await waitThenClick(row.selector);
     }
 
-    // grabs last 10 rows from time sheet
-    const timeSheetRows = (await sheet.getRows(0)).slice(1).slice(-10);
-
+    // get pay period length from sheet 3
+    const payPeriods = await sheet.getRows(2);
+    // payPeriod needs to negative for the double slice shenanigans on the next line
+    const payPeriod = -Math.abs(payPeriods[payPeriods.length - 1].payPeriod);
+    // grabs last payPeriod rows from time sheet
+    const timeSheetRows = (await sheet.getRows(0)).slice(1).slice(payPeriod);
     // then loop through the data and enter it into banner time sheet
     for (const [index, row] of timeSheetRows.entries()) {
         if (index === 5) {
@@ -53,5 +56,5 @@ const Sheet = require('./sheet');
         await saveButton.click();
     }
 
-    await browser.close();
+    // await browser.close();
 })()
