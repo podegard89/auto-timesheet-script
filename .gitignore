@@ -1,6 +1,7 @@
 node_modules/
 credentials.json
-secrets.js
+# secrets.js
 url.json
 secrets.json
 test.js
+.env

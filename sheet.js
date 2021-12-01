@@ -1,4 +1,5 @@
 const { GoogleSpreadsheet } = require('google-spreadsheet');
+require('dotenv').config();
 
 const secrets = require('./secrets')
 
